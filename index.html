@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7655db">
+  <title>Mundo de las Palabras</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">🌈 Mundo de las Palabras</div>
+  <div class="stats">
+    <span>🪙 <b id="coins">0</b></span>
+    <span>❤️ <b id="lives">5</b></span>
+    <span>⭐ <b id="stars">0</b></span>
+  </div>
+</header>
+
+<main>
+
+  <!-- INICIO -->
+  <section id="home" class="screen active">
+    <div class="hero">
+      <div class="hero-text">
+        <span class="tag">¡Una aventura mágica!</span>
+        <h1>¡Aprende jugando!</h1>
+        <p>Explora mundos, descubre palabras y conviértete en un gran lector.</p>
+        <button class="primary" onclick="startAdventure()">🚀 JUGAR</button>
+        <button class="secondary" onclick="showScreen('worlds')">🗺️ Mundos</button>
+      </div>
+      <div class="hero-unicorn" onclick="petLuna()">🦄</div>
+    </div>
+
+    <div class="home-cards">
+      <button class="feature" onclick="showScreen('shop')">🛍️<br>Tienda</button>
+      <button class="feature" onclick="showScreen('ranking')">🏆<br>Ranking</button>
+      <button class="feature" onclick="dailyReward()">🎁<br>Regalo diario</button>
+      <button class="feature" onclick="showScreen('settings')">🎨<br>Temas y ajustes</button>
+    </div>
+
+    <p id="homeMessage" class="message">
+      ¡Luna está esperando jugar contigo!
+    </p>
+  </section>
+
+  <!-- MUNDOS -->
+  <section id="worlds" class="screen">
+    <h1>🗺️ Elige tu mundo</h1>
+    <p>¡Cada mundo tiene 60 niveles!</p>
+    <div id="worldGrid" class="world-grid"></div>
+    <button class="secondary" onclick="showScreen('home')">⬅ Volver</button>
+  </section>
+
+  <!-- NIVELES -->
+  <section id="levels" class="screen">
+    <h1 id="levelTitle">Niveles</h1>
+    <p>Completa los retos para desbloquear nuevas aventuras.</p>
+    <div id="levelGrid" class="level-grid"></div>
+    <button class="secondary" onclick="showScreen('worlds')">⬅ Mundos</button>
+  </section>
+
+  <!-- JUEGO -->
+  <section id="game" class="screen">
+    <div class="game-heading">
+      <button class="small-btn" onclick="showScreen('levels')">✖ Salir</button>
+      <span id="worldName"></span>
+      <span id="levelNumber"></span>
+    </div>
+
+    <div class="progress-track">
+      <div id="progressBar"></div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-luna" onclick="petLuna()">🦄</div>
+      <div id="questionType" class="tag">RETO</div>
+      <h2 id="questionText">¡Vamos a jugar!</h2>
+      <div id="questionVisual" class="question-visual"></div>
+      <div id="answerOptions" class="answers"></div>
+      <p id="feedback" class="feedback">¡Elige tu respuesta!</p>
+      <div class="game-actions">
+        <button class="secondary" onclick="useHint()">💡 Pista</button>
+        <button class="secondary" onclick="readQuestion()">🔊 Escuchar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section id="result" class="screen">
+    <div class="result-card">
+      <div class="result-icon" id="resultIcon">🏆</div>
+      <h1 id="resultTitle">¡Muy bien!</h1>
+      <p id="resultText">Has completado el nivel.</p>
+      <div id="resultRewards"></div>
+      <button class="primary" onclick="nextLevel()">➡ Continuar</button>
+      <button class="secondary" onclick="showScreen('levels')">🗺️ Ver niveles</button>
+    </div>
+  </section>
+
+  <!-- TIENDA -->
+  <section id="shop" class="screen">
+    <h1>🛍️ Tienda mágica</h1>
+    <p>Compra accesorios y mejoras para Luna.</p>
+    <div id="shopGrid" class="shop-grid"></div>
+    <button class="secondary" onclick="showScreen('home')">⬅ Volver</button>
+  </section>
+
+  <!-- RANKING -->
+  <section id="ranking" class="screen">
+    <h1>🏆 Ranking de jugadores</h1>
+    <p>¡Compite para llegar al primer puesto!</p>
+
+    <div class="ranking-profile">
+      <h2>👤 Tu jugador</h2>
+      <input id="playerName" type="text" maxlength="18"
+        placeholder="Escribe tu nombre">
+      <button class="primary" onclick="savePlayerName()">
+        Guardar nombre
+      </button>
+      <p id="profileMessage"></p>
+    </div>
+
+    <div class="ranking-list">
+      <h2>🥇 Mejores jugadores</h2>
+      <div id="rankingList"></div>
+    </div>
+
+    <button class="secondary" onclick="showScreen('home')">⬅ Volver</button>
+  </section>
+
+  <!-- AJUSTES -->
+  <section id="settings" class="screen">
+    <h1>⚙️ Personalización</h1>
+
+    <div class="settings-card">
+      <h2>🎨 Cambiar colores</h2>
+      <label for="themeSelect">Selecciona tu tema:</label>
+      <select id="themeSelect" onchange="changeTheme(this.value)">
+        <option value="light">🌈 Original</option>
+        <option value="dark">🌑 Negro oscuro</option>
+        <option value="blue">💙 Azul</option>
+        <option value="pink">💗 Rosa</option>
+      </select>
+    </div>
+
+    <div class="settings-card">
+      <h2>🔊 Sonido y lectura</h2>
+      <label>
+        <input type="checkbox" id="soundToggle">
+        Activar sonidos
+      </label>
+      <label>
+        <input type="checkbox" id="speechToggle">
+        Activar lectura en voz alta
+      </label>
+    </div>
+
+    <div class="settings-card">
+      <h2>💾 Progreso</h2>
+      <button class="secondary" onclick="resetGame()">
+        🔄 Reiniciar progreso
+      </button>
+    </div>
+
+    <button class="secondary" onclick="showScreen('home')">⬅ Volver</button>
+  </section>
+
+</main>
+
+<footer>
+  🌟 Mundo de las Palabras · Aprende, juega y descubre 🌟
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
